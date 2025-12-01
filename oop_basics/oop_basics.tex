@@ -1,0 +1,824 @@
+\documentclass[aspectratio=169, 10pt]{csbeamer}
+% remove the entire footer area
+\setbeamertemplate{footline}{}
+\usepackage{bookmark}
+\lstset{basicstyle=\ttfamily\footnotesize}
+% \lstset{basicstyle=\ttfamily\small}
+
+
+\begin{document}
+
+\section{OOP Basics}
+
+\begin{frame}{Classes \& Instances}
+    \textbf{Class:} Definition of objects of the same kind.
+
+    A class is a template, or prototype that defines and describes
+    \begin{itemize}
+        \item the static attributes
+        \item dynamic behaviors
+    \end{itemize}
+    common to all objects of the same kind.
+
+    \vspace{3mm}
+    \textbf{Instantce:} An instance is a realization (instantiation) of a \textbf{particular item} of a class.
+    All the instances of a class have similar properties, as described in the class definition.
+
+    \begin{examplebox}
+        You can define a class called "Student" and create three instances of the class "Student" for "Peter", "Paul" and "Pauline".
+    \end{examplebox}
+\end{frame}
+
+\begin{frame}
+    \begin{columns}[T]
+        \begin{column}{0.4\textwidth}
+            \includegraphics[width=\linewidth]{images/three_compartment.png}
+        \end{column}
+
+        \begin{column}{0.6\textwidth}
+            \begin{itemize}
+                \item \textbf{Classname} (or identifier): identifies the class.
+                \item \textbf{Data Members} or \textbf{Variables} (or attributes, states, fields): contains the static attributes of the class.
+                \item \textbf{Member Functions} (or methods, behaviors, operations): contains the dynamic operations of the class.
+            \end{itemize}
+            \vspace{3mm}
+
+            \textbf{Class Members:} The data members and member functions are collectively called class members.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \begin{columns}[T]
+        \begin{column}{0.6\textwidth}
+            \includegraphics[width=\linewidth]{images/example_class.png}
+        \end{column}
+
+        \begin{column}{0.4\textwidth}
+            \includegraphics[width=\linewidth]{images/example_instance.png}
+
+            \vspace{2mm}
+
+            \textbf{Class Naming Convention:}
+            \footnotesize
+            \begin{itemize}
+                \item Should be a noun or a noun phrase made up of several words.
+                \item All words should be initial capitalized (camel-case)
+                \item Singular noun
+                \item Meaningful and Self-descripted
+            \end{itemize}
+            \begin{examplebox}
+                SoccerPlayer, HttpProxyServer, FileInputStream, PrintStream, SocketFactory.
+            \end{examplebox}
+
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Class Definition}
+    \tiny
+    \begin{lstlisting}
+class Circle {          // classname
+private:
+    double radius;      // Data members (variables)
+    string color;
+public:
+    double getRadius(); // Member functions
+    double getArea();
+};
+
+    \end{lstlisting}
+
+    \vspace{1mm}
+
+    \begin{lstlisting}
+class SoccerPlayer {    // classname
+private:
+    int number;         // Data members (variables)
+    string name;
+    int x, y;
+public:   
+    void run();         // Member functions
+    void kickBall();
+};
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Creating instances}
+    \begin{lstlisting}
+// Construct 3 instances of the class Circle: c1, c2, and c3
+Circle c1(1.2, "red");  // radius, color
+Circle c2(3.4);         // radius, default color
+Circle c3;              // default radius and color
+    \end{lstlisting}
+    \vspace{1mm}
+    Alternatively, you can invoke the constructor explicitly using the following syntax:
+    \begin{lstlisting}
+Circle c1 = Circle(1.2, "red");  // radius, color
+Circle c2 = Circle(3.4);         // radius, default color
+Circle c3 = Circle();            // default radius and color
+    \end{lstlisting}
+
+    \vspace{1mm}
+
+    \textbf{Accessing member of instances wit dot operator (.)}:
+
+    \begin{lstlisting}
+// Declare and construct instances c1 and c2 of the class Circle
+Circle c1(1.2, "blue");
+Circle c2(3.4, "green");
+// Invoke member function via dot operator
+cout << c1.getArea() << endl;
+cout << c2.getArea() << endl;
+// Reference data members via dot operator
+c1.radius = 5.5;
+c2.radius = 6.6;
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{OOP Example}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \includegraphics[width=\linewidth]{images/oop_example1.png}
+        \end{column}
+
+        \begin{column}{0.6\textwidth}
+            \texttt{Circle} class contains two data members: \texttt{radius} (of type double) and \texttt{color} (of type String);
+
+            \vspace{2mm}
+
+            three member functions: \texttt{getRadius()}, \texttt{getColor()}, and \texttt{getArea()}.
+
+            \vspace{2mm}
+
+            Three instances of \texttt{Circle}s called \texttt{c1}, \texttt{c2}, and \texttt{c3} shall then be constructed with their respective data members, as shown in the instance diagrams.
+
+            \vspace{2mm}
+            \rightarrow \quad \texttt{CircleAIO.cpp}
+
+            \vspace{2mm}
+
+            To run the cpp program:
+
+
+            \texttt{g++ -o CircleAIO.exe CircleAIO.cpp}
+
+            \texttt{// -o specifies the output file name}
+
+
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Constructors}
+\begin{frame}[fragile]
+    \footnotesize
+
+    \textbf{Constructor} - Special function that has the \textit{function name same as the classname}.
+    A constructor is used to construct and \textit{initialize all the data members}. For the \texttt{Circle} class we define a constructor as follows:
+
+    \begin{lstlisting}
+    // Constructor has the same name as the class
+    Circle(double r = 1.0, string c = "red") {
+        radius = r;
+        color = c;
+    }
+    \end{lstlisting}
+
+    \vspace{2mm}
+    To create a new instance of a class, you need to declare the name of the  instance and invoke the constructor:
+    \vspace{2mm}
+
+    \begin{lstlisting}
+    Circle c1(1.2, "blue");
+    Circle c2(3.4);     // default color
+    Circle c3;          // default radius and color
+                        // Take note that there is no empty bracket ()
+    \end{lstlisting}
+    \vspace{2mm}
+    \begin{notebox}
+        \begin{itemize}
+            \item Constructor name is same as the class name.
+            \item No return type. Hence no return statement is allowed.
+            \item Can only be invoked once to initialize the instance.
+            \item Constructors are not inherited.
+        \end{itemize}
+    \end{notebox}
+\end{frame}
+
+\begin{frame}[fragile]{Default arguments for functions}
+
+    \begin{lstlisting}
+/* Test function default arguments (TestFnDefault.cpp) */
+#include <iostream>
+using namespace std;
+ 
+// Function prototype
+int sum(int n1, int n2, int n3 = 0, int n4 = 0, int n5 = 0);
+ 
+int main() {
+   cout << sum(1, 1, 1, 1, 1) << endl; // 5
+   cout << sum(1, 1, 1, 1) << endl;    // 4
+   cout << sum(1, 1, 1) << endl;       // 3
+   cout << sum(1, 1) << endl;          // 2
+// cout << sum(1) << endl;  // error: too few arguments
+}
+ 
+// Function definition
+// The default values shall be specified in function prototype,
+//   not the function implementation
+int sum(int n1, int n2, int n3, int n4, int n5) {
+   return n1 + n2 + n3 + n4 + n5;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    An access control modifier can be used to control the visibility of a data member or a member function within a class.
+
+    \begin{enumerate}
+        \item \textbf{\texttt{public}}: The member (data or function) is accessible and available to all in the system.
+        \item \textbf{\texttt{private}}: The member (data or function) is accessible and available within this class only.
+    \end{enumerate}
+
+    \vspace{2mm}
+    \textbf{UML Notation}: In UML notation, \texttt{public} members are denoted with a \texttt{"+"}, while \texttt{private} members with a \texttt{"-"} in the class diagram.
+
+    \vspace{2mm}
+    Data members are hidden from outside world with \texttt{private} access control modifier. Access  to the private data members are provide via \texttt{public} functions, e.g., \texttt{getRadius()} and \texttt{getColor()}
+
+    \vspace{2mm}
+    \begin{definitionbox}{Information hiding}
+        Objects communicate with each others using well-defined interfaces (public functions). Objects are not allowed to know the implementation details of others. The implementation details are hidden or encapsulated within the class.
+    \end{definitionbox}
+    \footnotesize
+    \textbf{Rule of Thumb:} Do not make any data member public, unless you have a good reason.
+
+\end{frame}
+
+\begin{frame}[fragile]{Getters \& Setters}
+    If the designer of the Circle class permits the change the radius and color after a Circle object is constructed, he has to provide the appropriate setter.
+
+    \begin{examplebox}
+        \begin{lstlisting}
+// Setter for color
+void setColor(string c) {
+   color = c;
+}
+   
+// Setter for radius
+void setRadius(double r) {
+   radius = r;
+}
+        \end{lstlisting}
+    \end{examplebox}
+
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{\*this} }
+    You can use keyword \texttt{this} to refer to \textbf{this instance} inside a class definition.
+    \vspace{2mm}
+
+    One of the main usage of keyword \texttt{this} is to resolve ambiguity between the names of data member and function parameter.
+    \begin{examplebox}
+        \begin{lstlisting}
+class Circle {
+private:
+   double radius;                 // Member variable called "radius"
+   ......
+public:
+   void setRadius(double radius) { // Function's argument also called "radius"
+      @@this->radius = radius;@@
+        // "this.radius" refers to this instance's member variable
+        // "radius" resolved to the function's argument.
+   }
+   ......
+}
+        \end{lstlisting}
+    \end{examplebox}
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \textbf{Default constructor}
+    \footnotesize
+    \vspace{2mm}
+
+    A default constructor is a constructor with no parameters, or having default values for all the parameters. For example, the above \texttt{Circle}'s constructor can be served as default constructor with all the parameters default.
+
+    \begin{lstlisting}
+Circle c1;   // Declare c1 as an instance of Circle, and invoke the default constructor
+@@Circle c1(); // Error!
+             // (This declares c1 as a function that takes no parameter
+             // and returns a Circle instance)@@
+    \end{lstlisting}
+
+    \begin{notebox}
+        if you did not provide ANY constructor, the compiler automatically provides a default constructor that does nothing
+    \end{notebox}
+
+    \begin{lstlisting}
+ClassName::ClassName(){} // Take no argument and do nothing
+    \end{lstlisting}
+
+    \begin{notebox}
+        Compiler will not provide a default constructor if you define any constructor(s).
+    \end{notebox}
+
+    If all the constructors you defined require arguments, invoking no-argument default constructor results in error. This is to allow class designer to make it impossible to create an uninitialized instance, by NOT providing an explicit default constructor.
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \textbf{Constructor's member initializer list}
+    \vspace{2mm}
+
+    \begin{lstlisting}
+Circle(double r = 1.0, string c = "red") @@: radius(r), color(c)@@ { }
+    \end{lstlisting}
+
+    \textit{Member initializer list:}
+    \begin{itemize}
+        \item placed after the constructor's header
+        \item separated by a colon (\texttt{:})
+        \item each initializer is in the form of \texttt{data\_member\_name(parameter\_name)}
+    \end{itemize}
+    \vspace{2mm}
+
+    For fundamental type, it is equivalent to \texttt{data\_member\_name = parameter\_name} .
+
+    For object, the constructor will be invoked to construct the object. The constructor's body (empty in this case) will be run after the completion of member initializer list.
+
+    \begin{notebox}
+        It is recommended to use member initializer list to initialize all the data members, as it is often more efficient than doing assignment inside the constructor's body.
+    \end{notebox}
+\end{frame}
+
+\begin{frame}[fragile]
+    \textbf{Destructor}
+    \vspace{2mm}
+
+    A \textit{destructor}, similar to constructor, is a special function that has the same name as the classname, with a prefix \textbf{\texttt{\textasciitilde}}, e.g., \texttt{~Circle()}. Destructor is called implicitly when an object is destroyed.
+    If you do not define a destructor, the compiler provides a default, which does nothing.
+    \begin{lstlisting}
+class MyClass {
+public:
+   // The default destructor that does nothing
+   ~MyClass() { }
+......
+}
+\end{lstlisting}
+
+    \begin{notebox}
+        If your class contains data member which is dynamically allocated (via \texttt{new} or \texttt{new[]} operator), you need to free the storage via \texttt{delete} or \texttt{delete[]}.
+
+    \end{notebox}
+\end{frame}
+
+\begin{frame}[fragile]
+    \textbf{Copy Constructor}
+    \vspace{2mm}
+
+    A \textit{copy constructor} constructs a new object by copying an existing object of the same type.
+
+    \vspace{2mm}
+    If you do not define a copy constructor, the compiler provides a default which copies all the data members of the given object.
+
+    \begin{lstlisting}
+Circle c4(7.8, "blue");
+cout << "Radius=" << c4.getRadius() << " Area=" << c4.getArea()
+     << " Color=" << c4.getColor() << endl;
+                // Radius=7.8 Area=191.135 Color=blue
+ 
+// Construct a new object by copying an existing object
+// via the so-called default copy constructor
+@@Circle c5(c4);@@ //copy constructor takes an argument, which is an object of the same class.
+cout << "Radius=" << c5.getRadius() << " Area=" << c5.getArea()
+     << " Color=" << c5.getColor() << endl;
+                // Radius=7.8 Area=191.135 Color=blue
+    \end{lstlisting}
+
+    \vspace{2mm}
+    When an object is \textit{passed by value}, the copy constructor will make a clone of the argument.
+\end{frame}
+
+\begin{frame}[fragile]
+    \textbf{Advanced Notes}
+
+    \begin{itemize}
+        \item Pass-by-value for object means calling the copy constructor. To avoid the overhead of creating a clone copy, it is usually better to \textit{pass-by-reference-to-const}, which will not have side effect on modifying the caller's object.
+        \item The copy constructor has the following signature:
+              \begin{lstlisting}
+class MyClass {
+private:
+   T1 member1;
+   T2 member2;
+public:
+   // The default copy constructor which constructs an object via memberwise copy
+   @@MyClass(const MyClass & rhs)@@ {
+      member1 = rhs.member1;
+      member2 = rhs.member2;
+   }
+......
+}
+            \end{lstlisting}
+        \item The default copy constructor performs \textit{shadow copy}. It does not copy the dynamically allocated data members created via \texttt{new} or \texttt{new[]} operator.
+    \end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------------------
+
+\section{Separating Header and Implementation}
+
+\begin{frame}{Why separate header and implementation?}
+    \begin{itemize}
+        \item \textbf{Header file (.h):} declares the public interface of the class
+              \begin{itemize}
+                  \item class declaration
+                  \item public / private members
+                  \item function prototypes
+              \end{itemize}
+        \item \textbf{Implementation file (.cpp):} defines how the functions actually work
+              \begin{itemize}
+                  \item function bodies
+                  \item private helper functions
+              \end{itemize}
+        \item \textbf{Advantages:}
+              \begin{itemize}
+                  \item Clear separation of \textbf{interface} and \textbf{implementation}
+                  \item Different vendors can provide different implementations for the same header
+                  \item Users only need the header; implementation can be shipped as \texttt{.o} or library
+              \end{itemize}
+    \end{itemize}
+
+    \begin{definitionbox}{Interface vs Implementation}
+        \textbf{Interface} is what the class promises to provide (header).\\
+        \textbf{Implementation} is how these promises are fulfilled (source file).:contentReference[oaicite:0]{index=0}
+    \end{definitionbox}
+\end{frame}
+
+\begin{frame}{Typical C++ class file layout}
+    A single class is commonly split into 3 files:
+    \begin{itemize}
+        \item \texttt{ClassName.h} \\
+              \quad Public interface (class declaration)
+        \item \texttt{ClassName.cpp} \\
+              \quad Implementation of member functions
+        \item \texttt{TestClassName.cpp} \\
+              \quad Test driver / demo program
+    \end{itemize}
+
+    \vspace{2mm}
+    \textbf{Example (Circle):}
+    \begin{itemize}
+        \item \texttt{Circle.h} - interface of \texttt{Circle}%:contentReference[oaicite:1]{index=1}
+        \item \texttt{Circle.cpp} - implementation of \texttt{Circle}
+        \item \texttt{TestCircle.cpp} - test driver for \texttt{Circle}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Header guards (\texttt{\#ifndef} / \texttt{\#define})}
+    \begin{itemize}
+        \item Problem: the same header might be included multiple times
+              \begin{itemize}
+                  \item can lead to duplicate declaration errors
+              \end{itemize}
+        \item Solution: wrap the header file with a preprocessor guard:
+    \end{itemize}
+
+    \begin{examplebox}
+        \footnotesize
+        \begin{lstlisting}
+#ifndef TIME_H
+#define TIME_H
+
+// class Time { ... };
+
+#endif  // TIME_H
+\end{lstlisting}
+    \end{examplebox}
+
+    \begin{itemize}
+        \item First inclusion: \texttt{TIME\_H} is not defined -> body is included and \texttt{TIME\_H} is defined.
+        \item Later inclusions: \texttt{TIME\_H} is already defined -> body is skipped.%:contentReference[oaicite:2]{index=2}
+    \end{itemize}
+\end{frame}
+
+% =========================================================
+\section{Example: Circle Class (Modular Version)}
+
+\begin{frame}{Circle Class Interface}
+    \begin{columns}[T]
+        \begin{column}{0.45\textwidth}
+            \centering
+            % class diagram circle
+            \includegraphics[width=\linewidth]{images/oop_circle.png}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \textbf{\texttt{Circle.h}} declares:​:contentReference[oaicite:3]{index=3}
+            \begin{itemize}
+                \item Private data members:
+                      \begin{itemize}
+                          \item \texttt{double radius;}
+                          \item \texttt{string color;}
+                      \end{itemize}
+                \item Public member functions:
+                      \begin{itemize}
+                          \item constructor with default parameters
+                          \item getters / setters for \texttt{radius}, \texttt{color}
+                          \item \texttt{getArea()} as a \texttt{const} function
+                      \end{itemize}
+            \end{itemize}
+            \vspace{2mm}
+            Big code is in \textbf{\texttt{Circle.h}}, \textbf{\texttt{Circle.cpp}}, \textbf{\texttt{TestCircle.cpp}}.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Compiling the modular Circle example}
+    \footnotesize
+    \textbf{Files:}
+    \begin{itemize}
+        \item \texttt{Circle.h}
+        \item \texttt{Circle.cpp}
+        \item \texttt{TestCircle.cpp}
+    \end{itemize}
+
+    \vspace{2mm}
+    \textbf{Compile and link (one-shot):}
+    \begin{lstlisting}
+g++ -o TestCircle.exe TestCircle.cpp Circle.cpp
+    \end{lstlisting}
+
+    \vspace{2mm}
+    \textbf{Or using object files:}
+    \begin{lstlisting}
+g++ -c Circle.cpp          // Circle.o
+g++ -c TestCircle.cpp      // TestCircle.o
+g++ -o TestCircle.exe TestCircle.o Circle.o
+    \end{lstlisting}
+
+    All implementation details are hidden behind the interface \texttt{Circle.h}.
+\end{frame}
+
+% =========================================================
+\section{Example: Time Class}
+
+\begin{frame}{Time Class – Overview}
+    \begin{itemize}
+        \item Models a time of day in \texttt{hh:mm:ss} format
+        \item Typical private data members:
+              \begin{itemize}
+                  \item \texttt{int hour;}
+                  \item \texttt{int minute;}
+                  \item \texttt{int second;}
+              \end{itemize}
+        \item Public operations (in \texttt{Time.h}):​:contentReference[oaicite:4]{index=4}
+              \begin{itemize}
+                  \item constructor to initialize hour, minute, second
+                  \item getters / setters for each field
+                  \item \texttt{setTime(h, m, s)}
+                  \item \texttt{print()} – prints \texttt{"hh:mm:ss"}
+                  \item \texttt{nextSecond()} – advances time by 1 second
+              \end{itemize}
+    \end{itemize}
+
+    Big code: \textbf{\texttt{Time.h}}, \textbf{\texttt{Time.cpp}}, \textbf{\texttt{TestTime.cpp}}.
+\end{frame}
+
+\begin{frame}[fragile]{Compiling the Time example}
+    \footnotesize
+    \textbf{Idea:} compile the implementation into an object file, then link with the test driver.:contentReference[oaicite:5]{index=5}
+
+    \begin{lstlisting}
+// Compile Time.cpp into object file Time.o
+g++ -c Time.cpp
+
+// Link TestTime with Time.o
+g++ -o TestTime.exe TestTime.cpp Time.o
+
+// Run
+TestTime
+    \end{lstlisting}
+
+    \vspace{2mm}
+    This pattern is the same for all the following examples:
+    \begin{itemize}
+        \item \texttt{ClassName.h}
+        \item \texttt{ClassName.cpp}
+        \item \texttt{TestClassName.cpp}
+    \end{itemize}
+\end{frame}
+
+% =========================================================
+\section{Example: Point Class}
+
+\begin{frame}{Point Class – Modeling 2D points}
+    \begin{columns}[T]
+        \begin{column}{0.45\textwidth}
+            \centering
+            % \includegraphics[width=\linewidth]{images/ClassDiagramPoint.png}
+            \includegraphics[width=\linewidth]{images/oop_circle.png}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            The \texttt{Point} class models 2D points with integer coordinates.:contentReference[oaicite:6]{index=6}
+            \begin{itemize}
+                \item Private data:
+                      \begin{itemize}
+                          \item \texttt{int x}, \texttt{int y} (default 0)
+                      \end{itemize}
+                \item Behavior:
+                      \begin{itemize}
+                          \item constructor, getters and setters
+                          \item \texttt{setXY(x, y)}
+                          \item \texttt{getMagnitude()} – returns \(\sqrt{x^2 + y^2}\)
+                          \item \texttt{getArgument()} – returns \(\tan^{-1}(y/x)\) via \texttt{atan2}
+                          \item \texttt{print()} – prints \texttt{"(x,y)"}
+                      \end{itemize}
+            \end{itemize}
+
+            Big code: \textbf{\texttt{Point.h}}, \textbf{\texttt{Point.cpp}}, \textbf{\texttt{TestPoint.cpp}}.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =========================================================
+\section{Example: Account Class}
+
+\begin{frame}{Account Class – Bank account model}
+    \begin{columns}[T]
+        \begin{column}{0.45\textwidth}
+            \centering
+            % \includegraphics[width=\linewidth]{images/ClassDiagramAccount.png}
+            \includegraphics[width=\linewidth]{images/oop_circle.png}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            The \texttt{Account} class models a simple bank account.:contentReference[oaicite:7]{index=7}
+            \begin{itemize}
+                \item Private data:
+                      \begin{itemize}
+                          \item \texttt{int accountNumber;}
+                          \item \texttt{double balance;}
+                      \end{itemize}
+                \item Public operations:
+                      \begin{itemize}
+                          \item constructor with \texttt{accountNumber} and optional \texttt{balance}
+                          \item \texttt{credit(amount)} – adds \texttt{amount} to \texttt{balance}
+                          \item \texttt{debit(amount)} – subtracts \texttt{amount}, or prints\\
+                                \texttt{"Amount withdrawn exceeds the current balance!"}
+                          \item \texttt{print()} – prints \texttt{"A/C no: xxx Balance=\$xx.xx"}
+                      \end{itemize}
+            \end{itemize}
+            Big code: \textbf{\texttt{Account.h}}, \textbf{\texttt{Account.cpp}}, \textbf{\texttt{TestAccount.cpp}}.%:contentReference[oaicite:8]{index=8}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =========================================================
+\section{Example: Ball Class}
+
+\begin{frame}{Ball Class – Moving object}
+    \begin{columns}[T]
+        \begin{column}{0.45\textwidth}
+            \centering
+            % \includegraphics[width=\linewidth]{images/ClassDiagramBall.png}
+            \includegraphics[width=\linewidth]{images/oop_circle.png}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            A \texttt{Ball} class models a moving ball in 2D.:contentReference[oaicite:9]{index=9}
+            \begin{itemize}
+                \item Private data:
+                      \begin{itemize}
+                          \item \texttt{double x, y;} – position
+                          \item \texttt{double xSpeed, ySpeed;} – velocity
+                      \end{itemize}
+                \item Public operations:
+                      \begin{itemize}
+                          \item constructor with default position and speed
+                          \item getters / setters for position and speed
+                          \item \texttt{setXY(x, y)}, \texttt{setXYSpeed(xs, ys)}
+                          \item \texttt{move()} – updates \texttt{x} and \texttt{y} by current speeds
+                          \item \texttt{print()} – prints\\
+                                \texttt{"Ball @ (x,y) with speed (xSpeed,ySpeed)"}
+                      \end{itemize}
+            \end{itemize}
+            Big code: \textbf{\texttt{Ball.h}}, \textbf{\texttt{Ball.cpp}}, \textbf{\texttt{TestBall.cpp}}%.:contentReference[oaicite:10]{index=10}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =========================================================
+\section{Example: Author \& Book Classes}
+
+\begin{frame}{Author Class – Person who writes books}
+    \begin{columns}[T]
+        \begin{column}{0.45\textwidth}
+            \centering
+            % \includegraphics[width=\linewidth]{images/ClassDiagramAuthor.png}
+            \includegraphics[width=\linewidth]{images/oop_circle.png}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \texttt{Author} represents a single author.:contentReference[oaicite:11]{index=11}
+            \begin{itemize}
+                \item Private data:
+                      \begin{itemize}
+                          \item \texttt{string name;}
+                          \item \texttt{string email;}
+                          \item \texttt{char gender;} (\texttt{'m'}, \texttt{'f'}, or \texttt{'u'})
+                      \end{itemize}
+                \item Behavior:
+                      \begin{itemize}
+                          \item constructor with \texttt{name}, \texttt{email}, \texttt{gender}
+                          \item getters for all fields
+                          \item setter for \texttt{email} only
+                          \item \texttt{print()} – prints \texttt{"name (gender) at email"}
+                      \end{itemize}
+            \end{itemize}
+            Big code: \textbf{\texttt{Author.h}}, \textbf{\texttt{Author.cpp}}, \textbf{\texttt{TestAuthor.cpp}}.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Book Class – Has-a Author}
+    \begin{columns}[T]
+        \begin{column}{0.45\textwidth}
+            \centering
+            % \includegraphics[width=\linewidth]{images/ClassDiagramBook.png}
+            \includegraphics[width=\linewidth]{images/oop_circle.png}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \texttt{Book} models a book written by exactly one author.:contentReference[oaicite:12]{index=12}
+            \begin{itemize}
+                \item Private data:
+                      \begin{itemize}
+                          \item \texttt{string name;}
+                          \item \texttt{Author author;}  \hfill (object data member)
+                          \item \texttt{double price;}   \hfill (must be $> 0$)
+                          \item \texttt{int qtyInStock;} \hfill (default 0, must be $\ge 0$)
+                      \end{itemize}
+                \item Public operations:
+                      \begin{itemize}
+                          \item constructor taking an \texttt{Author} object
+                          \item getters / setters (including \texttt{getAuthor()})
+                          \item \texttt{print()} – \\
+                                \quad \texttt{"'book-name' by author-name (gender) @ email"}
+                          \item \texttt{getAuthorName()} – convenience getter
+                      \end{itemize}
+            \end{itemize}
+            Big code: \textbf{\texttt{Book.h}}, \textbf{\texttt{Book.cpp}}, \textbf{\texttt{TestBook.cpp}}.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Aggregation: \texttt{Book} has-an \texttt{Author}}
+    \begin{itemize}
+        \item In the UML diagram, the \textit{hollow diamond} near \texttt{Book} means \textbf{aggregation} (a \emph{has-a} relationship).:contentReference[oaicite:13]{index=13}
+        \item In code:
+              \begin{itemize}
+                  \item \texttt{Book} has a data member \texttt{Author author;}
+                  \item \texttt{Book} includes \texttt{"Author.h"} in \texttt{Book.h}
+              \end{itemize}
+        \item Conceptually:
+              \begin{itemize}
+                  \item A \texttt{Book} object is composed of an \texttt{Author} object.
+                  \item We can delegate author-related queries to the embedded \texttt{Author}.
+              \end{itemize}
+    \end{itemize}
+
+    \vspace{2mm}
+    \begin{examplebox}
+        This demonstrates how classes can be built from other classes,\\
+        not only from primitive types.
+    \end{examplebox}
+\end{frame}
+
+\begin{frame}{Recap of the OOP examples}
+    \begin{itemize}
+        \item \textbf{Circle, Time, Point, Account, Ball, Author, Book}
+              \begin{itemize}
+                  \item All follow the same pattern:
+                  \item clear private data + public interface
+                  \item constructors, getters/setters, utility methods
+              \end{itemize}
+        \item \textbf{Header / implementation separation}
+              \begin{itemize}
+                  \item \texttt{ClassName.h} – interface
+                  \item \texttt{ClassName.cpp} – implementation
+                  \item \texttt{TestClassName.cpp} – test driver
+              \end{itemize}
+        \item \textbf{Design lessons:}
+              \begin{itemize}
+                  \item encapsulate data, expose behavior
+                  \item keep interfaces small and clear
+                  \item build bigger abstractions (e.g., \texttt{Book}) out of smaller ones (e.g., \texttt{Author})
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+
+\section{To be Continued}
+
+
+
+\end{document}

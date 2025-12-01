@@ -1,0 +1,496 @@
+% ============================================================================
+% EXAMPLE USAGE OF csbeamer.cls
+% ============================================================================
+% Compile with: pdflatex example.tex
+% Or for XeLaTeX: xelatex example.tex
+% For minted (code highlighting): pdflatex -shell-escape example.tex
+
+\documentclass{csbeamer}
+% remove the entire footer area
+\setbeamertemplate{footline}{}
+\usepackage{bookmark}
+
+
+% ============================================================================
+% DOCUMENT METADATA
+% ============================================================================
+\title{Introduction to Data Structures}
+\subtitle{Lecture 1: Arrays and Linked Lists}
+\author{Prof. John Smith}
+\course{CS 201: Data Structures and Algorithms}
+\university{State University}
+\department{Department of Computer Science}
+\date{Fall 2024}
+
+% Optional: Add university logo
+% \logo{\includegraphics[height=1cm]{images/university_logo.png}}
+
+\begin{document}
+
+% ============================================================================
+% TITLE FRAME
+% ============================================================================
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% ============================================================================
+% OUTLINE FRAME
+% ============================================================================
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% ============================================================================
+% SECTION 1: Introduction
+% ============================================================================
+\section{Introduction}
+
+\begin{frame}{What are Data Structures?}
+    \begin{itemize}
+        \item Data structures organize and store data efficiently
+        \item Enable fast access, insertion, and deletion operations
+        \item Form the foundation of algorithm design
+    \end{itemize}
+    
+    \vspace{1em}
+    
+    \begin{notebox}[N]
+        Choosing the right data structure is crucial for program performance!
+    \end{notebox}
+\end{frame}
+
+% ============================================================================
+% SECTION 2: Arrays
+% ============================================================================
+\section{Arrays}
+
+\begin{frame}[fragile]{Array Basics}
+    \begin{definitionbox}[Array Definition]
+        An \textbf{array} is a contiguous block of memory that stores elements of the same type, accessible by index.
+    \end{definitionbox}
+    
+    \vspace{1em}
+    
+    \textbf{Declaration in \cpp:}
+    \begin{lstlisting}
+// Static array
+int arr[5] = {1, 2, 3, 4, 5};
+
+// Dynamic array
+int* dynamicArr = new int[10];
+
+// C++ vector (recommended)
+std::vector<int> vec = {1, 2, 3, 4, 5};
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Array Complexity}
+    \begin{table}
+       \centering
+        \begin{tabular}{@{}lcc@{}}
+            \toprule
+            \textbf{Operation} & \textbf{Time Complexity} & \textbf{Notes} \\
+            \midrule
+            Access by index & $O(1)$ & Direct memory access \\
+            Search & $O(n)$ & Linear scan required \\
+            Insert at end & $O(1)$ & Amortized for vectors \\
+            Insert at position & $O(n)$ & Requires shifting \\
+            Delete & $O(n)$ & Requires shifting \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    \vspace{1em}
+    
+    \hbtext{Key Insight:}{blue} Arrays excel at \htext{random access}{red} but struggle with \htext{insertions/deletions}{red}.
+\end{frame}
+
+% ============================================================================
+% SECTION 3: Linked Lists
+% ============================================================================
+\section{Linked Lists}
+
+\begin{frame}[fragile]{Linked List Structure}
+    \begin{definitionbox}[Linked List]
+        A \textbf{linked list} is a linear data structure where elements (nodes) are connected via pointers.
+    \end{definitionbox}
+    
+    \vspace{1em}
+    
+    \textbf{Node Structure:}
+    \begin{lstlisting}
+struct Node {
+    int data;        // Data field
+    Node* next;      // Pointer to next node
+    
+    Node(int val) : data(val), next(nullptr) {}
+};
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Linked List Operations}
+    \begin{examplebox}[Insertion at Head]
+    \begin{lstlisting}
+void insertAtHead(Node*& head, int value) {
+    Node* newNode = new Node(value);
+    newNode->next = head;
+    head = newNode;
+}
+    \end{lstlisting}
+    \end{examplebox}
+    
+    \vspace{0.5em}
+    
+    \textbf{Complexity Analysis:}
+    \begin{itemize}
+        \item Time: $\obrace{O(1)}{constant time}{blue}$
+        \item Space: $O(1)$ auxiliary space
+    \end{itemize}
+\end{frame}
+
+% ============================================================================
+% SECTION 4: Comparison
+% ============================================================================
+\section{Comparison}
+
+\begin{frame}{Arrays vs. Linked Lists}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \hbtext{Arrays}{blue}
+            \begin{itemize}
+                \item[+] Fast random access
+                \item[+] Cache-friendly
+                \item[+] Less memory overhead
+                \item[-] Fixed size (static)
+                \item[-] Expensive insertions
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \hbtext{Linked Lists}{red}
+            \begin{itemize}
+                \item[+] Dynamic size
+                \item[+] Efficient insertions
+                \item[+] No waste of space
+                \item[-] No random access
+                \item[-] Extra memory for pointers
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \vspace{1em}
+    
+    \begin{warningbox}[Design Choice]
+        Use arrays for \textbf{frequent access}, linked lists for \textbf{frequent modifications}.
+    \end{warningbox}
+\end{frame}
+
+% ============================================================================
+% SECTION 5: Practice
+% ============================================================================
+\section{Practice Problems}
+
+\begin{frame}{Exercise 1: Reverse an Array}
+    \textbf{Problem:} Write a function to reverse an array in-place.
+    
+    \vspace{1em}
+    
+    \begin{exercisebox}{Exercise 1}
+        \textbf{Approach:} Use two pointers (left and right) and swap elements while moving toward the center.
+        
+        \vspace{0.5em}
+        
+        \textbf{Time Complexity:} $O(n)$ \\
+        \textbf{Space Complexity:} $O(1)$
+        
+        \vspace{0.5em}
+        
+        \hitext{Key idea:}{blue} Swap elements at positions $i$ and $n-1-i$ for $i = 0$ to $\lfloor n/2 \rfloor$.
+    \end{exercisebox}
+\end{frame}
+
+\begin{frame}{Mathematical Notation Examples}
+    Using custom commands for emphasis:
+    
+    \vspace{1em}
+    
+    \textbf{Array index calculation:}
+    \[
+    \text{address}(A[i]) = \obrace{\text{base\_address}}{starting point}{blue} + \ubrace{i \times \text{element\_size}}{offset}{red}
+    \]
+    
+    \vspace{1em}
+    
+    \textbf{Amortized analysis:}
+    \[
+    \text{Total cost} = \sum_{i=1}^{n} c_i \leq \htext{O(n)}{blue}
+    \]
+\end{frame}
+
+% ============================================================================
+% FINAL SLIDE
+% ============================================================================
+\begin{frame}{Summary}
+    \begin{itemize}
+        \item Arrays provide \hbtext{$O(1)$ access}{blue} but \hbtext{$O(n)$ insertions}{red}
+        \item Linked lists offer \hbtext{$O(1)$ insertions}{blue} but \hbtext{$O(n)$ access}{red}
+        \item Choice depends on the application requirements
+        \item Understanding trade-offs is essential for efficient programming
+    \end{itemize}
+    
+    \vspace{2em}
+    
+    \begin{center}
+        \Large \textbf{Questions?}
+    \end{center}
+\end{frame}
+
+\end{document}% ============================================================================
+% EXAMPLE USAGE OF csbeamer.cls
+% ============================================================================
+% Compile with: pdflatex example.tex
+% Or for XeLaTeX: xelatex example.tex
+% For minted (code highlighting): pdflatex -shell-escape example.tex
+
+\documentclass{csbeamer}
+% remove the entire footer area
+\setbeamertemplate{footline}{}
+
+
+% ============================================================================
+% DOCUMENT METADATA
+% ============================================================================
+\title{Introduction to Data Structures}
+\subtitle{Lecture 1: Arrays and Linked Lists}
+\author{Prof. John Smith}
+\course{CS 201: Data Structures and Algorithms}
+\university{State University}
+\department{Department of Computer Science}
+\date{Fall 2024}
+
+% Optional: Add university logo
+% \logo{\includegraphics[height=1cm]{images/university_logo.png}}
+
+\begin{document}
+
+% ============================================================================
+% TITLE FRAME
+% ============================================================================
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% ============================================================================
+% OUTLINE FRAME
+% ============================================================================
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% ============================================================================
+% SECTION 1: Introduction
+% ============================================================================
+\section{Introduction}
+
+\begin{frame}{What are Data Structures?}
+    \begin{itemize}
+        \item Data structures organize and store data efficiently
+        \item Enable fast access, insertion, and deletion operations
+        \item Form the foundation of algorithm design
+    \end{itemize}
+    
+    \vspace{1em}
+    
+    \begin{notebox}[N]
+        Choosing the right data structure is crucial for program performance!
+    \end{notebox}
+\end{frame}
+
+% ============================================================================
+% SECTION 2: Arrays
+% ============================================================================
+\section{Arrays}
+
+\begin{frame}[fragile]{Array Basics}
+    \begin{definitionbox}[Array Definition]
+        An \textbf{array} is a contiguous block of memory that stores elements of the same type, accessible by index.
+    \end{definitionbox}
+    
+    \vspace{1em}
+    
+    \textbf{Declaration in \cpp:}
+    \begin{lstlisting}
+// Static array
+int arr[5] = {1, 2, 3, 4, 5};
+
+// Dynamic array
+int* dynamicArr = new int[10];
+
+// C++ vector (recommended)
+std::vector<int> vec = {1, 2, 3, 4, 5};
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Array Complexity}
+    \begin{table}
+       \centering
+        \begin{tabular}{@{}lcc@{}}
+            \toprule
+            \textbf{Operation} & \textbf{Time Complexity} & \textbf{Notes} \\
+            \midrule
+            Access by index & $O(1)$ & Direct memory access \\
+            Search & $O(n)$ & Linear scan required \\
+            Insert at end & $O(1)$ & Amortized for vectors \\
+            Insert at position & $O(n)$ & Requires shifting \\
+            Delete & $O(n)$ & Requires shifting \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    \vspace{1em}
+    
+    \hbtext{Key Insight:}{blue} Arrays excel at \htext{random access}{red} but struggle with \htext{insertions/deletions}{red}.
+\end{frame}
+
+% ============================================================================
+% SECTION 3: Linked Lists
+% ============================================================================
+\section{Linked Lists}
+
+\begin{frame}[fragile]{Linked List Structure}
+    \begin{definitionbox}[Linked List]
+        A \textbf{linked list} is a linear data structure where elements (nodes) are connected via pointers.
+    \end{definitionbox}
+    
+    \vspace{1em}
+    
+    \textbf{Node Structure:}
+    \begin{lstlisting}
+struct Node {
+    int data;        // Data field
+    Node* next;      // Pointer to next node
+    
+    Node(int val) : data(val), next(nullptr) {}
+};
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Linked List Operations}
+    \begin{examplebox}[Insertion at Head]
+    \begin{lstlisting}
+void insertAtHead(Node*& head, int value) {
+    Node* newNode = new Node(value);
+    newNode->next = head;
+    head = newNode;
+}
+    \end{lstlisting}
+    \end{examplebox}
+    
+    \vspace{0.5em}
+    
+    \textbf{Complexity Analysis:}
+    \begin{itemize}
+        \item Time: $\obrace{O(1)}{constant time}{blue}$
+        \item Space: $O(1)$ auxiliary space
+    \end{itemize}
+\end{frame}
+
+% ============================================================================
+% SECTION 4: Comparison
+% ============================================================================
+\section{Comparison}
+
+\begin{frame}{Arrays vs. Linked Lists}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \hbtext{Arrays}{blue}
+            \begin{itemize}
+                \item[+] Fast random access
+                \item[+] Cache-friendly
+                \item[+] Less memory overhead
+                \item[-] Fixed size (static)
+                \item[-] Expensive insertions
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \hbtext{Linked Lists}{red}
+            \begin{itemize}
+                \item[+] Dynamic size
+                \item[+] Efficient insertions
+                \item[+] No waste of space
+                \item[-] No random access
+                \item[-] Extra memory for pointers
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \vspace{1em}
+    
+    \begin{warningbox}[Design Choice]
+        Use arrays for \textbf{frequent access}, linked lists for \textbf{frequent modifications}.
+    \end{warningbox}
+\end{frame}
+
+% ============================================================================
+% SECTION 5: Practice
+% ============================================================================
+\section{Practice Problems}
+
+\begin{frame}{Exercise 1: Reverse an Array}
+    \textbf{Problem:} Write a function to reverse an array in-place.
+    
+    \vspace{1em}
+    
+    \begin{exercisebox}{Exercise 1}
+        \textbf{Approach:} Use two pointers (left and right) and swap elements while moving toward the center.
+        
+        \vspace{0.5em}
+        
+        \textbf{Time Complexity:} $O(n)$ \\
+        \textbf{Space Complexity:} $O(1)$
+        
+        \vspace{0.5em}
+        
+        \hitext{Key idea:}{blue} Swap elements at positions $i$ and $n-1-i$ for $i = 0$ to $\lfloor n/2 \rfloor$.
+    \end{exercisebox}
+\end{frame}
+
+\begin{frame}{Mathematical Notation Examples}
+    Using custom commands for emphasis:
+    
+    \vspace{1em}
+    
+    \textbf{Array index calculation:}
+    \[
+    \text{address}(A[i]) = \obrace{\text{base\_address}}{starting point}{blue} + \ubrace{i \times \text{element\_size}}{offset}{red}
+    \]
+    
+    \vspace{1em}
+    
+    \textbf{Amortized analysis:}
+    \[
+    \text{Total cost} = \sum_{i=1}^{n} c_i \leq \htext{O(n)}{blue}
+    \]
+\end{frame}
+
+% ============================================================================
+% FINAL SLIDE
+% ============================================================================
+\begin{frame}{Summary}
+    \begin{itemize}
+        \item Arrays provide \hbtext{$O(1)$ access}{blue} but \hbtext{$O(n)$ insertions}{red}
+        \item Linked lists offer \hbtext{$O(1)$ insertions}{blue} but \hbtext{$O(n)$ access}{red}
+        \item Choice depends on the application requirements
+        \item Understanding trade-offs is essential for efficient programming
+    \end{itemize}
+    
+    \vspace{2em}
+    
+    \begin{center}
+        \Large \textbf{Questions?}
+    \end{center}
+\end{frame}
+
+\end{document}
