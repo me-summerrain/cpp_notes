@@ -430,52 +430,50 @@ public:
 
 \section{Separating Header and Implementation}
 
-\begin{frame}{Why separate header and implementation?}
-    \begin{itemize}
-        \item \textbf{Header file (.h):} declares the public interface of the class
-              \begin{itemize}
-                  \item class declaration
-                  \item public / private members
-                  \item function prototypes
-              \end{itemize}
-        \item \textbf{Implementation file (.cpp):} defines how the functions actually work
-              \begin{itemize}
-                  \item function bodies
-                  \item private helper functions
-              \end{itemize}
-        \item \textbf{Advantages:}
-              \begin{itemize}
-                  \item Clear separation of \textbf{interface} and \textbf{implementation}
-                  \item Different vendors can provide different implementations for the same header
-                  \item Users only need the header; implementation can be shipped as \texttt{.o} or library
-              \end{itemize}
-    \end{itemize}
+\begin{frame}[fragile]
 
-    \begin{definitionbox}{Interface vs Implementation}
-        \textbf{Interface} is what the class promises to provide (header).\\
-        \textbf{Implementation} is how these promises are fulfilled (source file).:contentReference[oaicite:0]{index=0}
-    \end{definitionbox}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item \textbf{Header file (.h):} defines the public interface of the class
+                      \begin{itemize}
+                          \item class declaration
+                          \item public / private members
+                          \item function prototypes
+                      \end{itemize}
+                \item \textbf{Implementation file (.cpp):} defines how the functions actually work
+                      \begin{itemize}
+                          \item function bodies
+                          \item private helper functions
+                      \end{itemize}
+
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}
+            A single class is commonly split into 3 files:
+            \begin{itemize}
+                \item \texttt{ClassName.h} \\
+                      \quad Public interface (class declaration)
+                \item \texttt{ClassName.cpp} \\
+                      \quad Implementation of member functions
+                \item \texttt{TestClassName.cpp} \\
+                      \quad Test driver / demo program
+            \end{itemize}
+
+            \vspace{2mm}
+            \textbf{Example (Circle):}
+            \begin{itemize}
+                \item \texttt{Circle.h} - interface of \texttt{Circle}
+                \item \texttt{Circle.cpp} - implementation of \texttt{Circle}
+                \item \texttt{TestCircle.cpp} - test driver for \texttt{Circle}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+
 \end{frame}
 
-\begin{frame}{Typical C++ class file layout}
-    A single class is commonly split into 3 files:
-    \begin{itemize}
-        \item \texttt{ClassName.h} \\
-              \quad Public interface (class declaration)
-        \item \texttt{ClassName.cpp} \\
-              \quad Implementation of member functions
-        \item \texttt{TestClassName.cpp} \\
-              \quad Test driver / demo program
-    \end{itemize}
-
-    \vspace{2mm}
-    \textbf{Example (Circle):}
-    \begin{itemize}
-        \item \texttt{Circle.h} - interface of \texttt{Circle}%:contentReference[oaicite:1]{index=1}
-        \item \texttt{Circle.cpp} - implementation of \texttt{Circle}
-        \item \texttt{TestCircle.cpp} - test driver for \texttt{Circle}
-    \end{itemize}
-\end{frame}
 
 \begin{frame}[fragile]{Header guards (\texttt{\#ifndef} / \texttt{\#define})}
     \begin{itemize}
@@ -500,12 +498,13 @@ public:
 
     \begin{itemize}
         \item First inclusion: \texttt{TIME\_H} is not defined -> body is included and \texttt{TIME\_H} is defined.
-        \item Later inclusions: \texttt{TIME\_H} is already defined -> body is skipped.%:contentReference[oaicite:2]{index=2}
+        \item Later inclusions: \texttt{TIME\_H} is already defined -> body is skipped.
     \end{itemize}
 \end{frame}
 
 % =========================================================
-\section{Example: Circle Class (Modular Version)}
+\section{OOP Examples}
+\subsection{Example: Circle Class (Modular Version)}
 
 \begin{frame}{Circle Class Interface}
     \begin{columns}[T]
@@ -515,7 +514,7 @@ public:
             \includegraphics[width=\linewidth]{images/oop_circle.png}
         \end{column}
         \begin{column}{0.55\textwidth}
-            \textbf{\texttt{Circle.h}} declares:​:contentReference[oaicite:3]{index=3}
+            \textbf{\texttt{Circle.h}} declares:
             \begin{itemize}
                 \item Private data members:
                       \begin{itemize}
@@ -530,7 +529,6 @@ public:
                       \end{itemize}
             \end{itemize}
             \vspace{2mm}
-            Big code is in \textbf{\texttt{Circle.h}}, \textbf{\texttt{Circle.cpp}}, \textbf{\texttt{TestCircle.cpp}}.
         \end{column}
     \end{columns}
 \end{frame}
@@ -562,66 +560,47 @@ g++ -o TestCircle.exe TestCircle.o Circle.o
 \end{frame}
 
 % =========================================================
-\section{Example: Time Class}
 
-\begin{frame}{Time Class – Overview}
-    \begin{itemize}
-        \item Models a time of day in \texttt{hh:mm:ss} format
-        \item Typical private data members:
-              \begin{itemize}
-                  \item \texttt{int hour;}
-                  \item \texttt{int minute;}
-                  \item \texttt{int second;}
-              \end{itemize}
-        \item Public operations (in \texttt{Time.h}):​:contentReference[oaicite:4]{index=4}
-              \begin{itemize}
-                  \item constructor to initialize hour, minute, second
-                  \item getters / setters for each field
-                  \item \texttt{setTime(h, m, s)}
-                  \item \texttt{print()} – prints \texttt{"hh:mm:ss"}
-                  \item \texttt{nextSecond()} – advances time by 1 second
-              \end{itemize}
-    \end{itemize}
+\subsection{Time Class}
+\begin{frame}{Time Class}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \includegraphics[width=\linewidth]{images/time.png}
+        \end{column}
 
-    Big code: \textbf{\texttt{Time.h}}, \textbf{\texttt{Time.cpp}}, \textbf{\texttt{TestTime.cpp}}.
-\end{frame}
-
-\begin{frame}[fragile]{Compiling the Time example}
-    \footnotesize
-    \textbf{Idea:} compile the implementation into an object file, then link with the test driver.:contentReference[oaicite:5]{index=5}
-
-    \begin{lstlisting}
-// Compile Time.cpp into object file Time.o
-g++ -c Time.cpp
-
-// Link TestTime with Time.o
-g++ -o TestTime.exe TestTime.cpp Time.o
-
-// Run
-TestTime
-    \end{lstlisting}
-
-    \vspace{2mm}
-    This pattern is the same for all the following examples:
-    \begin{itemize}
-        \item \texttt{ClassName.h}
-        \item \texttt{ClassName.cpp}
-        \item \texttt{TestClassName.cpp}
-    \end{itemize}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Models a time of day in \texttt{hh:mm:ss} format
+                \item Typical private data members:
+                      \begin{itemize}
+                          \item \texttt{int hour;} (0-23)
+                          \item \texttt{int minute;} (0-59)
+                          \item \texttt{int second;} (0-59)
+                      \end{itemize}
+                \item Public operations (in \texttt{Time.h}):
+                      \begin{itemize}
+                          \item constructor to initialize hour, minute, second
+                          \item getters / setters for each field
+                          \item \texttt{setTime(h, m, s)}
+                          \item \texttt{print()} – prints \texttt{"hh:mm:ss"}
+                          \item \texttt{nextSecond()} – advances time by 1 second
+                      \end{itemize}
+            \end{itemize}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 % =========================================================
-\section{Example: Point Class}
 
+\subsection{Point Class}
 \begin{frame}{Point Class – Modeling 2D points}
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
             \centering
-            % \includegraphics[width=\linewidth]{images/ClassDiagramPoint.png}
-            \includegraphics[width=\linewidth]{images/oop_circle.png}
+            \includegraphics[width=\linewidth]{images/point.png}
         \end{column}
         \begin{column}{0.55\textwidth}
-            The \texttt{Point} class models 2D points with integer coordinates.:contentReference[oaicite:6]{index=6}
+            The \texttt{Point} class models 2D points with integer coordinates.
             \begin{itemize}
                 \item Private data:
                       \begin{itemize}
@@ -643,17 +622,16 @@ TestTime
 \end{frame}
 
 % =========================================================
-\section{Example: Account Class}
+\subsection{Account Class}
 
 \begin{frame}{Account Class – Bank account model}
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
             \centering
-            % \includegraphics[width=\linewidth]{images/ClassDiagramAccount.png}
-            \includegraphics[width=\linewidth]{images/oop_circle.png}
+            \includegraphics[width=\linewidth]{images/account.png}
         \end{column}
         \begin{column}{0.55\textwidth}
-            The \texttt{Account} class models a simple bank account.:contentReference[oaicite:7]{index=7}
+            The \texttt{Account} class models a simple bank account.
             \begin{itemize}
                 \item Private data:
                       \begin{itemize}
@@ -669,23 +647,23 @@ TestTime
                           \item \texttt{print()} – prints \texttt{"A/C no: xxx Balance=\$xx.xx"}
                       \end{itemize}
             \end{itemize}
-            Big code: \textbf{\texttt{Account.h}}, \textbf{\texttt{Account.cpp}}, \textbf{\texttt{TestAccount.cpp}}.%:contentReference[oaicite:8]{index=8}
+            Big code: \textbf{\texttt{Account.h}}, \textbf{\texttt{Account.cpp}}, \textbf{\texttt{TestAccount.cpp}}.
         \end{column}
     \end{columns}
 \end{frame}
 
 % =========================================================
-\section{Example: Ball Class}
+\subsection{Ball Class}
 
 \begin{frame}{Ball Class – Moving object}
     \begin{columns}[T]
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.4\textwidth}
+
             \centering
-            % \includegraphics[width=\linewidth]{images/ClassDiagramBall.png}
-            \includegraphics[width=\linewidth]{images/oop_circle.png}
+            \includegraphics[width=\linewidth]{images/ball.png}
         \end{column}
-        \begin{column}{0.55\textwidth}
-            A \texttt{Ball} class models a moving ball in 2D.:contentReference[oaicite:9]{index=9}
+        \begin{column}{0.6\textwidth}
+            A \texttt{Ball} class models a moving ball in 2D.
             \begin{itemize}
                 \item Private data:
                       \begin{itemize}
@@ -702,23 +680,22 @@ TestTime
                                 \texttt{"Ball @ (x,y) with speed (xSpeed,ySpeed)"}
                       \end{itemize}
             \end{itemize}
-            Big code: \textbf{\texttt{Ball.h}}, \textbf{\texttt{Ball.cpp}}, \textbf{\texttt{TestBall.cpp}}%.:contentReference[oaicite:10]{index=10}
+            Big code: \textbf{\texttt{Ball.h}}, \textbf{\texttt{Ball.cpp}}, \textbf{\texttt{TestBall.cpp}}%.
         \end{column}
     \end{columns}
 \end{frame}
 
 % =========================================================
-\section{Example: Author \& Book Classes}
+\subsection{ Author \& Book Classes}
 
 \begin{frame}{Author Class – Person who writes books}
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
             \centering
-            % \includegraphics[width=\linewidth]{images/ClassDiagramAuthor.png}
-            \includegraphics[width=\linewidth]{images/oop_circle.png}
+            \includegraphics[width=\linewidth]{images/author.png}
         \end{column}
         \begin{column}{0.55\textwidth}
-            \texttt{Author} represents a single author.:contentReference[oaicite:11]{index=11}
+            \texttt{Author} represents a single author.
             \begin{itemize}
                 \item Private data:
                       \begin{itemize}
@@ -743,11 +720,10 @@ TestTime
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
             \centering
-            % \includegraphics[width=\linewidth]{images/ClassDiagramBook.png}
-            \includegraphics[width=\linewidth]{images/oop_circle.png}
+            \includegraphics[width=\linewidth]{images/book.png}
         \end{column}
         \begin{column}{0.55\textwidth}
-            \texttt{Book} models a book written by exactly one author.:contentReference[oaicite:12]{index=12}
+            \texttt{Book} models a book written by exactly one author.
             \begin{itemize}
                 \item Private data:
                       \begin{itemize}
@@ -772,7 +748,7 @@ TestTime
 
 \begin{frame}{Aggregation: \texttt{Book} has-an \texttt{Author}}
     \begin{itemize}
-        \item In the UML diagram, the \textit{hollow diamond} near \texttt{Book} means \textbf{aggregation} (a \emph{has-a} relationship).:contentReference[oaicite:13]{index=13}
+        \item In the UML diagram, the \textit{hollow diamond} near \texttt{Book} means \textbf{aggregation} (a \emph{has-a} relationship).
         \item In code:
               \begin{itemize}
                   \item \texttt{Book} has a data member \texttt{Author author;}
@@ -814,11 +790,5 @@ TestTime
               \end{itemize}
     \end{itemize}
 \end{frame}
-
-
-
-\section{To be Continued}
-
-
 
 \end{document}

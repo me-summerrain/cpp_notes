@@ -1,0 +1,24 @@
+\frametitle{Compiling the modular Circle example}
+\footnotesize
+    \textbf{Files:}
+    \begin{itemize}
+        \item \texttt{Circle.h}
+        \item \texttt{Circle.cpp}
+        \item \texttt{TestCircle.cpp}
+    \end{itemize}
+
+    \vspace{2mm}
+    \textbf{Compile and link (one-shot):}
+    \begin{lstlisting}
+g++ -o TestCircle.exe TestCircle.cpp Circle.cpp
+    \end{lstlisting}
+
+    \vspace{2mm}
+    \textbf{Or using object files:}
+    \begin{lstlisting}
+g++ -c Circle.cpp          // Circle.o
+g++ -c TestCircle.cpp      // TestCircle.o
+g++ -o TestCircle.exe TestCircle.o Circle.o
+    \end{lstlisting}
+
+    All implementation details are hidden behind the interface \texttt{Circle.h}.
